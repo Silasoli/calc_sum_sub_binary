@@ -1,0 +1,226 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+//Programa que calcula a soma e subtração de numeros binarios. Maximo de 8 dígitos na soma. (Sobre o bug que tinha comentando com o você eu consegui resolver, era uma questão de tamanho dos char (string). 
+
+void menu();
+void start();
+void sumBinary();
+
+
+void verifySize(char num[]){
+  if(strlen(num)>8){
+      printf("Máximo de 8 dígitos\n");
+      sumBinary();
+  }
+}
+
+char fillBinary(char bigger[20], char smaller[20]){
+   char zero[] = "0";
+   char equili[8];
+   int g = 0;
+   int giro = 0;
+   giro = strlen(bigger)-strlen(smaller);
+   for(g = giro - 1; g >= 0; g--) {
+        strcat(equili,zero);
+   }
+   strcat(equili,smaller);
+   strcpy(smaller,equili);
+   return *smaller;
+   
+}
+
+void inverter(char vet[120]){
+    int len = strlen(vet);
+    int i = 0;
+    printf("Resultado: ");
+    for (i= len - 1; i > 0; i--)
+    {
+        printf("%c", vet[i]);
+    }
+    printf("\n");
+}
+
+
+void sumBinary(){
+    char numOne[20];
+    char numTwo[20];
+    char valum[1] = "1";
+    char str[1];
+    int control = 0;
+    int total = 0;
+    int i = 0;
+    int sobeum = 0;
+    int resto = 0;
+    char tot[120];
+    printf("\e[1;1H\e[2J");
+    printf("Bem vindo(a) a função de somar\n");
+    printf("Digite o primeiro numero (max de 8 dígitos): ");    
+    scanf("%s",numOne);
+    printf("Digite o segundo numero (max de 8 dígitos): ");    
+    scanf("%s",numTwo);
+    verifySize(numOne);
+    verifySize(numTwo);
+
+    if(strlen(numOne)>strlen(numTwo)){
+        control = strlen(numOne);
+        fillBinary(numOne,numTwo);
+    } else {
+        control = strlen(numTwo);
+        fillBinary(numTwo,numOne);
+    }
+
+    for (i = control - 1; i >= 0; i--) {
+      str[0] = '\0';
+      total = numOne[i] - '0' + numTwo[i] - '0';
+      total = total + sobeum;
+      sobeum = total / 2;
+      resto = total % 2;
+      sprintf(str, "%d", resto);
+      strcat(tot,str);
+    }
+    if(sobeum == 0){
+      inverter(tot);
+    } else {
+      sprintf(str, "%d", sobeum);
+      strcat(tot,str);
+      inverter(tot);
+    }
+}
+
+void close(){
+      printf("\e[1;1H\e[2J");
+       printf(""
+    "╔═══════════════════════════════════════════════════════╗\n"
+    "║                  Programa finalizado                  ║\n"
+    "╚═══════════════════════════════════════════════════════╝\n"
+        );
+      exit(0);
+}
+
+int convertToDecimal()
+{
+    char bin[100];
+    unsigned long dec = 0;
+    int i = 0;
+    int s;
+    scanf("%s",bin);
+    s = strlen( bin );
+    while( s-- ) {
+    	if( bin[s] == '0' || bin[s] == '1' ) {
+    		dec = dec + pow(2, i++) * (bin[s] - '0');
+    	}
+    };
+    return dec;
+}
+
+void convertToBinary(int valor){
+{
+	int num = valor;
+	int vet_bin[100];
+	int i = 0, j;
+	int aux_num = num;
+
+	while(num > 0)
+	{
+		vet_bin[i] = num % 2;
+		i++;
+		num = num / 2;
+	}
+	printf("total:");
+	for(j = i - 1; j >= 0; j--)
+		printf("%d", vet_bin[j]);
+	printf("\n");
+}
+
+}
+
+void sub(){
+   printf("\e[1;1H\e[2J");
+   int value1;
+   int value2;
+   int total;
+   printf("Bem vindo(a) a função de subtrair\n");
+   printf("Digite o primeiro valor: ");
+   value1 = convertToDecimal();
+   printf("Digite o segundo valor: ");
+   value2 = convertToDecimal();
+   if(value1<value2){
+     printf("O primeiro valor deve ser maior que o segundo\n");
+     start();
+   } else if(value1==value2) {
+	  printf("total: 0\n");
+   } else {
+    total = value1 - value2;
+    convertToBinary(total);
+   }
+}
+
+void menu(){
+  int escolha;
+  printf("Escolha uma opção:");
+
+  scanf("%d",&escolha);
+   switch (escolha) {
+    case 1:
+      sumBinary();
+      start();
+       break;
+    case 2:
+      sub();
+    start();
+       break;
+    case 0:
+      close();
+       break;   
+    default:
+     close();
+ }
+}
+
+void startImg(){
+  printf("\e[1;1H\e[2J");
+    printf(""
+    "╔═══════════════════════════════════════════════════════╗\n"
+    "║            Calculadora de números binários            ║\n"
+    "╚═══════════════════════════════════════════════════════╝\n"
+        );
+    printf("\n"
+     "\n"
+     "                  ───▄▄─▄████▄▐▄▄▄▌\n"
+     "                  ──▐──████▀███▄█▄▌\n"
+     "                  ▐─▌──█▀▌──▐▀▌▀█▀  \n"
+     "                  ─▀───▌─▌──▐─▌\n"
+     "                  ─────█─█──▐▌█ \n"
+     "\n");
+     printf(""
+    "╔═══════════════════════════════════════════════════════╗\n"
+    "║Bem vindo(a), para começar digite os dados solicitados:║\n"
+    "╚═══════════════════════════════════════════════════════╝\n"
+        );
+}
+
+void start(){
+          printf(""
+    "╔═══════════════════════════════════════════════════════╗\n"
+    "║                                                       ║\n"
+    "║                         MENU                          ║\n"
+    "║                                                       ║\n"
+    "║       Digite 1 para somar 2  números binários         ║\n"
+    "║      Digite 2 para subtrair 2  números binários       ║\n"
+    "║         Digite 0 para finalizar o programa            ║\n"
+    "║                                                       ║\n"
+    "╚═══════════════════════════════════════════════════════╝\n"
+        );
+  menu();
+           
+}
+
+int main(){
+  startImg();
+  start();
+  return 0;
+}
+
